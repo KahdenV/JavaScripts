@@ -1,11 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Class representing a customer, extends the Person class.
+ */
 public class Customer extends Person {
-    private List<Order> orderHistory;
-
     public Customer(String name, String email, String password) {
         super(name, email, password);
-        this.orderHistory = new ArrayList<>();
     }
-} 
+}

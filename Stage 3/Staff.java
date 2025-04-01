@@ -1,8 +1,8 @@
+/**
+ * Class representing a staff member, extends the Person class.
+ */
 public class Staff extends Person {
-    private StaffRole role;
-
-    public Staff(String name, String email, String password, StaffRole role) {
+    public Staff(String name, String email, String password) {
         super(name, email, password);
-        this.role = role;
     }
-} 
+}
