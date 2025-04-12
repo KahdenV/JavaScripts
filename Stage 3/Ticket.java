@@ -1,5 +1,4 @@
-public class Showtime
-{
+public class Ticket {
     protected String ticketID;
     protected Customer ticketCustomer;
     protected Showtime ticketShowtime;
@@ -7,104 +6,78 @@ public class Showtime
     protected double ticketPrice;
     protected String ticketStatus;
 
-
-    public Ticket()
-    {
+    // Default constructor
+    public Ticket() {
     }
 
-
     // Getter for unique ticket identifier
-    public String getTicketID()
-    {
+    public String getTicketID() {
         return ticketID;
     }
 
-
-    // Getter for customer name
-    public String getTicketCustomer()
-    {
+    // Getter for customer
+    public Customer getTicketCustomer() {
         return ticketCustomer;
     }
 
-
     // Getter for ticket showtime
-    public Showtime getShowtime()
-    {
+    public Showtime getShowtime() {
         return ticketShowtime;
     }
 
-
     // Getter for ticket seat number
-    public String getSeatNumber()
-    {
+    public String getSeatNumber() {
         return seatNumber;
     }
 
-
     // Getter for ticket price
-    public double getTicketPrice()
-    {
+    public double getTicketPrice() {
         return ticketPrice;
     }
 
-
     // Getter for ticket status
-    public String getTicketStatus()
-    {
+    public String getTicketStatus() {
         return ticketStatus;
     }
 
-
-    // Replace unique ticket identifier
-    public void setTicketID(String newTicketID)
-    {
+    // Setter for unique ticket identifier
+    public void setTicketID(String newTicketID) {
         ticketID = newTicketID;
     }
 
-
-    // Replace customer name
-    public void setCustomer(String newCustomer)
-    {
+    // Setter for customer
+    public void setCustomer(Customer newCustomer) {
         ticketCustomer = newCustomer;
     }
 
-
-    // Replace ticket showtime
-    public void setShowtime(Showtime newShowtime)
-    {
+    // Setter for ticket showtime
+    public void setShowtime(Showtime newShowtime) {
         ticketShowtime = newShowtime;
     }
 
-
-    // Replace ticket seat number
-    public void setSeatNumber(String newSeatNumber)
-    {
+    // Setter for ticket seat number
+    public void setSeatNumber(String newSeatNumber) {
         seatNumber = newSeatNumber;
     }
 
-
-    // Replace ticket price
-    public void setTicketPrice(double newTicketPrice)
-    {
+    // Setter for ticket price
+    public void setTicketPrice(double newTicketPrice) {
         ticketPrice = newTicketPrice;
     }
 
-
-    // Replace ticket status
-    public void setTicketStatus(double newTicketStatus)
-    {
+    // Setter for ticket status
+    public void setTicketStatus(String newTicketStatus) {
         ticketStatus = newTicketStatus;
     }
 
-
     // Print ticket details
-    public void printTicketDetails()
-    {
+    public void printTicketDetails() {
         System.out.println("Customer: " + ticketCustomer.getName());
-        System.out.println("Movie: " + ticketShowtime.getShownMovie.getMovieTitle());
+        System.out.println("Movie: " + ticketShowtime.getShownMovie().getMovieTitle());
         System.out.println("Time: " + ticketShowtime.getTime());
         System.out.println("Screen: " + ticketShowtime.getShowingScreen());
         System.out.println("Seat: " + seatNumber);
         System.out.println("Price: " + ticketPrice);
+        System.out.println("Status: " + ticketStatus);
     }
 }

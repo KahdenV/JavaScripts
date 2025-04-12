@@ -11,12 +11,14 @@ public class MovieTheaterSystem {
     private List<Movie> movies;
     private Map<String, Concession> concessions;
     private static int customerIdCounter = 1;
+    private List<Showtime> showtimes;
 
     public MovieTheaterSystem() {
         customers = DummyData.createDummyCustomers();
         staff = DummyData.createDummyStaff();
         movies = DummyData.createDummyMovies();
         concessions = DummyData.createDummyConcessions(); // Initialize dummy concessions
+        showtimes = DummyData.getShowtimes(); // Initialize showtimes
 
         // Populate the global Concession menu with dummy data
         Concession.getConcessionMenu().putAll(concessions);
@@ -41,6 +43,10 @@ public class MovieTheaterSystem {
      */
     public Map<String, Concession> getConcessions() {
         return concessions;
+    }
+
+    public List<Showtime> getShowtimes() {
+        return showtimes;
     }
 
     /**

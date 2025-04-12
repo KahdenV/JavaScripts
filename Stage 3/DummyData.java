@@ -9,6 +9,14 @@ import java.util.HashMap;
 public class DummyData {
     // Store concession items in a static map
     private static final Map<String, Concession> concessionMenu = new HashMap<>();
+    private static List<Showtime> showtimes = null;
+
+    public static List<Showtime> getShowtimes() {
+        if (showtimes == null) {
+            showtimes = createDummyShowtimes(); // Initialize only once
+        }
+        return showtimes;
+    }
 
     /**
      * Creates a list of dummy customers.
@@ -41,27 +49,27 @@ public class DummyData {
      */
     public static List<Movie> createDummyMovies() {
         List<Movie> movies = new ArrayList<>();
-
+    
         // Add first movie
         Movie movie1 = new Movie();
-        movie1.setMovieID("001");
-        movie1.movieTitle = "Inception";
+        movie1.setMovieID("001"); // Ensure unique ID
+        movie1.setMovieTitle("Inception");
         movie1.movieGenres = "Sci-Fi, Thriller";
         movie1.movieRuntime = 148;
         movie1.movieRating = "PG-13";
         movie1.movieReleaseDate = "07/16/2010";
         movies.add(movie1);
-
+    
         // Add second movie
         Movie movie2 = new Movie();
-        movie2.setMovieID("002");
-        movie2.movieTitle = "The Dark Knight";
+        movie2.setMovieID("002"); // Ensure unique ID
+        movie2.setMovieTitle("The Dark Knight");
         movie2.movieGenres = "Action, Crime";
         movie2.movieRuntime = 152;
         movie2.movieRating = "PG-13";
         movie2.movieReleaseDate = "07/18/2008";
         movies.add(movie2);
-
+    
         return movies;
     }
 
@@ -85,31 +93,21 @@ public class DummyData {
         return concessionMenu;
     }
 
-    /**
-     * Creates a list of dummy showtimes.
-     *
-     * @return A list of dummy showtimes.
-     */
     public static List<Showtime> createDummyShowtimes() {
-        List<Showtime> showtimes = new ArrayList<>();
-
+        if (!Showtime.getShowtimeList().isEmpty()) {
+            return Showtime.getShowtimeList(); // Return the existing list if already populated
+        }
+    
         // Fetch dummy movies and screens
         List<Movie> movies = createDummyMovies();
         Screen screen1 = new Screen("Screen 1", 100);
         Screen screen2 = new Screen("Screen 2", 150);
-
+    
         // Add some dummy showtimes
-        Showtime showtime1 = new Showtime(movies.get(0)); // Assign movie
-        showtime1.setShowingScreen(screen1); // Assign screen
-        showtime1.setTime("12:00 PM"); // Assign time
-        showtimes.add(showtime1);
-
-        Showtime showtime2 = new Showtime(movies.get(1)); // Assign movie
-        showtime2.setShowingScreen(screen2); // Assign screen
-        showtime2.setTime("3:00 PM"); // Assign time
-        showtimes.add(showtime2);
-
-        return showtimes;
+        new Showtime(movies.get(0), screen1, "12:00 PM");
+        new Showtime(movies.get(1), screen2, "3:00 PM");
+    
+        return Showtime.getShowtimeList();
     }
 
 }
