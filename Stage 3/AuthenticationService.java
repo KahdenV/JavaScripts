@@ -34,6 +34,14 @@ public class AuthenticationService {
     }
 
     /**
+     * Logs in a guest user.
+     * @return A new Guest object.
+     */
+    public Guest loginAsGuest() {
+        return new Guest();
+    }
+
+    /**
      * Adds a new customer to the list of customers.
      *
      * @param newCustomer The new customer to add.

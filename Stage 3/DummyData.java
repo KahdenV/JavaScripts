@@ -1,10 +1,15 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
- * Utility class for creating dummy data for customers and staff.
+ * Utility class for creating dummy data for customers, staff, movies, and concessions.
  */
 public class DummyData {
+    // Store concession items in a static map
+    private static final Map<String, Concession> concessionMenu = new HashMap<>();
+
     /**
      * Creates a list of dummy customers.
      *
@@ -27,5 +32,56 @@ public class DummyData {
         staff.add(new Staff("Admin User", "admin", "admin123"));
         staff.add(new Staff("Theater Staff", "staff", "staff123"));
         return staff;
+    }
+
+    /**
+     * Creates a list of dummy movies.
+     *
+     * @return A list of dummy movies.
+     */
+    public static List<Movie> createDummyMovies() {
+        List<Movie> movies = new ArrayList<>();
+
+        // Add first movie
+        Movie movie1 = new Movie();
+        movie1.setMovieID("001");
+        movie1.movieTitle = "Inception";
+        movie1.movieGenres = "Sci-Fi, Thriller";
+        movie1.movieRuntime = 148;
+        movie1.movieRating = "PG-13";
+        movie1.movieReleaseDate = "07/16/2010";
+        movies.add(movie1);
+
+        // Add second movie
+        Movie movie2 = new Movie();
+        movie2.setMovieID("002");
+        movie2.movieTitle = "The Dark Knight";
+        movie2.movieGenres = "Action, Crime";
+        movie2.movieRuntime = 152;
+        movie2.movieRating = "PG-13";
+        movie2.movieReleaseDate = "07/18/2008";
+        movies.add(movie2);
+
+        return movies;
+    }
+
+    /**
+     * Initializes dummy concessions data.
+     */
+    public static Map<String, Concession> createDummyConcessions() {
+        if (concessionMenu.isEmpty()) {
+            concessionMenu.put("C001", new Concession("C001", "Popcorn (Small)", 4.50));
+            concessionMenu.put("C002", new Concession("C002", "Popcorn (Medium)", 6.00));
+            concessionMenu.put("C003", new Concession("C003", "Popcorn (Large)", 7.50));
+            concessionMenu.put("C004", new Concession("C004", "Coca-Cola (Small)", 2.50));
+            concessionMenu.put("C005", new Concession("C005", "Coca-Cola (Medium)", 3.50));
+            concessionMenu.put("C006", new Concession("C006", "Coca-Cola (Large)", 4.50));
+            concessionMenu.put("C007", new Concession("C007", "Nachos", 5.00));
+            concessionMenu.put("C008", new Concession("C008", "Hot Dog", 4.00));
+            concessionMenu.put("C009", new Concession("C009", "Candy (Small)", 3.00));
+            concessionMenu.put("C010", new Concession("C010", "Candy (Large)", 5.00));
+            concessionMenu.put("C011", new Concession("C011", "Ice Cream", 4.50));
+        }
+        return concessionMenu;
     }
 }
