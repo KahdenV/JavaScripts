@@ -14,6 +14,19 @@ public class Movie {
         movieScanner = new Scanner(System.in);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Movie movie = (Movie) obj;
+        return movieID.equals(movie.movieID);
+    }
+
+    @Override
+    public int hashCode() {
+        return movieID.hashCode();
+    }
+
     // Parameterized constructor
     public Movie(String title, String genres, int runtime) {
         this.movieTitle = title;

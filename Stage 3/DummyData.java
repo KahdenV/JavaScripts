@@ -85,18 +85,24 @@ public class DummyData {
         return concessionMenu;
     }
 
-    /**
-     * Creates a list of dummy showtimes.
-     *
-     * @return A list of dummy showtimes.
-     */
     public static List<Showtime> createDummyShowtimes() {
         List<Showtime> showtimes = new ArrayList<>();
 
+        // Fetch dummy movies and screens
+        List<Movie> movies = createDummyMovies();
+        Screen screen1 = new Screen("Screen 1", 100);
+        Screen screen2 = new Screen("Screen 2", 150);
+
         // Add some dummy showtimes
-        showtimes.add(new Showtime("Inception", "Screen 1", "12:00 PM"));
-        showtimes.add(new Showtime("The Dark Knight", "Screen 2", "3:00 PM"));
-        showtimes.add(new Showtime("Interstellar", "Screen 3", "6:00 PM"));
+        Showtime showtime1 = new Showtime(movies.get(0)); // Assign movie
+        showtime1.setShowingScreen(screen1); // Assign screen
+        showtime1.setTime("12:00 PM"); // Assign time
+        showtimes.add(showtime1);
+
+        Showtime showtime2 = new Showtime(movies.get(1)); // Assign movie
+        showtime2.setShowingScreen(screen2); // Assign screen
+        showtime2.setTime("3:00 PM"); // Assign time
+        showtimes.add(showtime2);
 
         return showtimes;
     }

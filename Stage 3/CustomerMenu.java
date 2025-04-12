@@ -15,6 +15,9 @@ public class CustomerMenu {
         this.movies = movies;
         this.customerId = customerId;
         this.concessions = concessions;
+
+        // Initialize showtimes with dummy data
+        this.showtimes = DummyData.createDummyShowtimes();
     }
 
     public void showCustomerMenu() {
@@ -64,6 +67,21 @@ public class CustomerMenu {
     }
 
     /**
+     * Displays all showtimes.
+     */
+    private void viewAllShowtimes() {
+        System.out.println("\n=== View All Showtimes ===");
+        if (showtimes == null || showtimes.isEmpty()) {
+            System.out.println("No showtimes available.");
+            return;
+        }
+
+        for (Showtime showtime : showtimes) {
+            showtime.printShowtimeDetails(); // Print details for each showtime
+        }
+    }
+
+    /**
      * Displays all available concession items.
      */
     private void viewConcessions() {
@@ -89,41 +107,47 @@ public class CustomerMenu {
         }
     }
 
-    /**
-     * Displays all showtimes.
-     */
-    private void viewAllShowtimes() {
-        System.out.println("\n=== View All Showtimes ===");
-        if (showtimes == null || showtimes.isEmpty()) {
-            System.out.println("No showtimes available.");
-            return;
-        }
-
-        for (Showtime showtime : showtimes) {
-            showtime.printShowtimeDetails(); // Print details for each showtime
-        }
-    }
-
-
 
     /**
-     * Searches for a movie by title.
-     *
-     * @param scanner The Scanner object for user input.
-     */
+     * Searches for a movie by title and displays its details along with associated showtimes.
+    *
+    * @param scanner The Scanner object for user input.
+    */
     private void searchMovie(Scanner scanner) {
         System.out.print("\nEnter movie title to search: ");
         String title = scanner.nextLine();
 
+        boolean movieFound = false;
+
         for (Movie movie : movies) {
             if (movie.getMovieTitle().equalsIgnoreCase(title)) {
                 movie.printMovieDetails();
-                return;
-            }
-        }
+                movieFound = true;
 
+                System.out.println("\n=== Associated Showtimes ===");
+                boolean showtimeFound = false;
+
+                // Display showtimes for this movie
+                if (showtimes != null && !showtimes.isEmpty()) {
+                    for (Showtime showtime : showtimes) {
+                        if (showtime.getShownMovie().equals(movie)) { // Use overridden equals method
+                            showtime.printShowtimeDetails();
+                            showtimeFound = true;
+                        }
+                    }
+                }
+
+                if (!showtimeFound) {
+                    System.out.println("No showtimes available for this movie.");
+                }
+                return; // Exit after showing the movie and its showtimes
+        }
+    }
+
+    if (!movieFound) {
         System.out.println("Movie not found.");
     }
+}
 
     /**
      * Books a ticket for the customer and processes the payment.
