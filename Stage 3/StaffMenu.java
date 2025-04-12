@@ -133,22 +133,39 @@ public class StaffMenu {
     }
 
     /**
-     * Adds a new movie to the list.
-     *
-     * @param scanner The Scanner object for user input.
-     */
+    * Adds a new movie to the list.
+    *
+    * @param scanner The Scanner object for user input.
+    */
     private void addMovie(Scanner scanner) {
         System.out.println("\n=== Add New Movie ===");
+    
+        // Create a new movie instance
+        Movie newMovie = new Movie();
+    
+        // Set title
         System.out.print("Enter movie title: ");
         String title = scanner.nextLine();
-        System.out.print("Enter movie genre: ");
-        String genre = scanner.nextLine();
+        newMovie.setMovieTitle(title);
+    
+        // Set genre using predefined selections
+        newMovie.setMovieGenres();
+    
+        // Set runtime (direct input)
         System.out.print("Enter movie runtime (in minutes): ");
         int runtime = scanner.nextInt();
         scanner.nextLine(); // Consume newline
-
-        Movie newMovie = new Movie(title, genre, runtime);
+        newMovie.movieRuntime = runtime; // Directly set runtime instead of using setMovieRuntime()
+    
+        // Set rating using predefined selections
+        newMovie.setMovieRating();
+    
+        // Set release date
+        newMovie.setMovieReleaseDate();
+    
+        // Add new movie to the list
         movies.add(newMovie);
+    
         System.out.println("New movie added successfully.");
     }
 
