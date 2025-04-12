@@ -84,4 +84,20 @@ public class DummyData {
         }
         return concessionMenu;
     }
+
+    /**
+     * Creates a list of dummy showtimes.
+     *
+     * @return A list of dummy showtimes.
+     */
+    public static List<Showtime> createDummyShowtimes() {
+        List<Showtime> showtimes = new ArrayList<>();
+
+        // Add some dummy showtimes
+        showtimes.add(new Showtime("Inception", "Screen 1", "12:00 PM"));
+        showtimes.add(new Showtime("The Dark Knight", "Screen 2", "3:00 PM"));
+        showtimes.add(new Showtime("Interstellar", "Screen 3", "6:00 PM"));
+
+        return showtimes;
+    }
 }

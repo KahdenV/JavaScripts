@@ -94,10 +94,16 @@ public class CustomerMenu {
      */
     private void viewAllShowtimes() {
         System.out.println("\n=== View All Showtimes ===");
+        if (showtimes == null || showtimes.isEmpty()) {
+            System.out.println("No showtimes available.");
+            return;
+        }
+
         for (Showtime showtime : showtimes) {
             showtime.printShowtimeDetails(); // Print details for each showtime
         }
     }
+
 
 
     /**
