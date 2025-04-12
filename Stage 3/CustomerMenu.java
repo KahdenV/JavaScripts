@@ -9,6 +9,7 @@ public class CustomerMenu {
     private List<Movie> movies;
     private String customerId;
     private Map<String, Concession> concessions;
+    private List<Showtime> showtimes;
 
     public CustomerMenu(List<Movie> movies, String customerId, Map<String, Concession> concessions) {
         this.movies = movies;
@@ -39,21 +40,24 @@ public class CustomerMenu {
                     viewAllMovies();
                     break;
                 case 2:
-                    searchMovie(scanner);
+                    viewAllShowtimes(); // Call the new method
                     break;
                 case 3:
-                    bookTicket(scanner);
+                    searchMovie(scanner);
                     break;
                 case 4:
-                    // viewOrderHistory();
+                    bookTicket(scanner);
                     break;
                 case 5:
-                    viewConcessions();
+                    // viewOrderHistory();
                     break;
                 case 6:
-                    purchaseConcessions(scanner);
+                    viewConcessions();
                     break;
                 case 7:
+                    purchaseConcessions(scanner);
+                    break;
+                case 8:
                     running = false; // Log out and return to the login menu
                     break;
                 default:
@@ -71,6 +75,17 @@ public class CustomerMenu {
             movie.printMovieDetails();
         }
     }
+
+    /**
+     * Displays all showtimes.
+     */
+    private void viewAllShowtimes() {
+        System.out.println("\n=== View All Showtimes ===");
+        for (Showtime showtime : showtimes) {
+            showtime.printShowtimeDetails(); // Print details for each showtime
+        }
+    }
+
 
     /**
      * Searches for a movie by title.

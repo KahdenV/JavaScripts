@@ -30,13 +30,11 @@ public class StaffMenu {
             System.out.println("4. View Inventory");
             System.out.println("5. Add Stock");
             System.out.println("6. Update Stock");
-            System.out.println("7. View Reports");
-            System.out.println("8. Add Movie");
-            System.out.println("9. Update Movie");
-            System.out.println("10. Manage Concession");
-            System.out.println("11. Manage Refunds");
-            System.out.println("12. View Payments"); // New option
-            System.out.println("13. Logout");
+            System.out.println("7. Add Movie");
+            System.out.println("8. Update Movie");
+            System.out.println("9. Manage Refunds");
+            System.out.println("10. View Payments");
+            System.out.println("11. Logout");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -53,33 +51,27 @@ public class StaffMenu {
                     viewAllCustomers();
                     break;
                 case 4:
-                    // viewInventory();
+                    viewInventory();
                     break;
                 case 5:
-                    // addStock(scanner);
+                    addStock(scanner);
                     break;
                 case 6:
-                    // updateStock(scanner);
+                    updateStock(scanner);
                     break;
                 case 7:
-                    // viewReports();
-                    break;
-                case 8:
                     addMovie(scanner);
                     break;
-                case 9:
+                case 8:
                     updateMovie(scanner);
                     break;
-                case 10:
-                    manageConcessions(scanner);
-                    break;
-                case 11:
+                case 9:
                     manageRefunds(scanner);
                     break;
-                case 12:
-                    viewPayments(); // Call the new method
+                case 10:
+                    viewPayments();
                     break;
-                case 13:
+                case 11:
                     running = false; // Log out and return to the login menu
                     break;
                 default:
@@ -124,23 +116,58 @@ public class StaffMenu {
     private void viewAllCustomers() {
         System.out.println("\n=== View All Customers ===");
         for (Customer c : customers) {
-            // Assuming Customer class has a getCustomerId() method
             System.out.println(c.getCustomerId() + " - " + c.getName() + " (" + c.getEmail() + ")");
         }
     }
 
     /**
-    * Displays all payments.
-    */
-    private void viewPayments() {
-        System.out.println("\n=== View Payments ===");
-        if (Payment.getPaymentRecords().isEmpty()) {
-            System.out.println("No payments have been processed.");
+     * Displays all concession items as inventory.
+     */
+    private void viewInventory() {
+        System.out.println("\n=== Inventory ===");
+        if (concessions.isEmpty()) {
+            System.out.println("No concession items available.");
         } else {
-            for (Payment payment : Payment.getPaymentRecords().values()) {
-                System.out.println(payment); // Assumes the Payment class has a meaningful toString() method
+            for (Concession item : concessions.values()) {
+                System.out.println(item.getConcessionId() + ": " + item.getItemName() + " - $" + item.getPrice());
             }
         }
+    }
+
+    /**
+     * Adds a new concession item to the inventory.
+     *
+     * @param scanner The Scanner object for user input.
+     */
+    private void addStock(Scanner scanner) {
+        System.out.println("\n=== Add Stock ===");
+        System.out.print("Enter item ID: ");
+        String itemId = scanner.nextLine();
+        System.out.print("Enter item name: ");
+        String itemName = scanner.nextLine();
+        System.out.print("Enter item price: ");
+        double price = scanner.nextDouble();
+        scanner.nextLine(); // Consume newline
+
+        Concession.addItem(itemId, itemName, price);
+    }
+
+    /**
+     * Updates an existing concession item in the inventory.
+     *
+     * @param scanner The Scanner object for user input.
+     */
+    private void updateStock(Scanner scanner) {
+        System.out.println("\n=== Update Stock ===");
+        System.out.print("Enter item ID: ");
+        String itemId = scanner.nextLine();
+        System.out.print("Enter new item name: ");
+        String itemName = scanner.nextLine();
+        System.out.print("Enter new item price: ");
+        double price = scanner.nextDouble();
+        scanner.nextLine(); // Consume newline
+
+        Concession.updateItem(itemId, itemName, price);
     }
 
     /**
@@ -223,90 +250,6 @@ public class StaffMenu {
     }
 
     /**
-     * Manage concessions menu for staff.
-     *
-     * @param scanner The Scanner object for user input.
-     */
-    private void manageConcessions(Scanner scanner) {
-        boolean managing = true;
-
-        while (managing) {
-            System.out.println("\n=== Manage Concessions ===");
-            System.out.println("1. Add Concession Item");
-            System.out.println("2. Update Concession Item");
-            System.out.println("3. Remove Concession Item");
-            System.out.println("4. Search Concession Item");
-            System.out.println("5. Back to Main Menu");
-            System.out.print("Enter your choice: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-            switch (choice) {
-                case 1:
-                    addConcessionItem(scanner);
-                    break;
-                case 2:
-                    updateConcessionItem(scanner);
-                    break;
-                case 3:
-                    removeConcessionItem(scanner);
-                    break;
-                case 4:
-                    searchConcessionItem(scanner);
-                    break;
-                case 5:
-                    managing = false;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
-
-    private void addConcessionItem(Scanner scanner) {
-        System.out.println("\n=== Add Concession Item ===");
-        System.out.print("Enter item ID: ");
-        String itemId = scanner.nextLine();
-        System.out.print("Enter item name: ");
-        String itemName = scanner.nextLine();
-        System.out.print("Enter item price: ");
-        double price = scanner.nextDouble();
-        scanner.nextLine(); // Consume newline
-
-        Concession.addItem(itemId, itemName, price);
-    }
-
-    private void updateConcessionItem(Scanner scanner) {
-        System.out.println("\n=== Update Concession Item ===");
-        System.out.print("Enter item ID: ");
-        String itemId = scanner.nextLine();
-        System.out.print("Enter new item name: ");
-        String itemName = scanner.nextLine();
-        System.out.print("Enter new item price: ");
-        double price = scanner.nextDouble();
-        scanner.nextLine(); // Consume newline
-
-        Concession.updateItem(itemId, itemName, price);
-    }
-
-    private void removeConcessionItem(Scanner scanner) {
-        System.out.println("\n=== Remove Concession Item ===");
-        System.out.print("Enter item ID: ");
-        String itemId = scanner.nextLine();
-
-        Concession.removeItem(itemId);
-    }
-
-    private void searchConcessionItem(Scanner scanner) {
-        System.out.println("\n=== Search Concession Item ===");
-        System.out.print("Enter item ID: ");
-        String itemId = scanner.nextLine();
-
-        Concession.searchItem(itemId);
-    }
-
-    /**
      * Manages staff-related actions, including refunds.
      */
     private void manageRefunds(Scanner scanner) {
@@ -315,5 +258,19 @@ public class StaffMenu {
         String paymentId = scanner.nextLine();
 
         Payment.refundPayment(paymentId);
+    }
+
+    /**
+     * Displays all payments.
+     */
+    private void viewPayments() {
+        System.out.println("\n=== View Payments ===");
+        if (Payment.getPaymentRecords().isEmpty()) {
+            System.out.println("No payments have been processed.");
+        } else {
+            for (Payment payment : Payment.getPaymentRecords().values()) {
+                System.out.println(payment); // Assumes the Payment class has a meaningful toString() method
+            }
+        }
     }
 }

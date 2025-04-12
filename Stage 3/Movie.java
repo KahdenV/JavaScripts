@@ -16,6 +16,12 @@ public class Movie
     public void inputMovieDetails() {
         System.out.println("Enter information for new movie: \n");
         movieScanner = new Scanner(System.in);
+    
+        // Prompt for and set the movie title
+        System.out.print("Enter movie title: ");
+        String title = movieScanner.nextLine();
+        setMovieTitle(title);
+    
         setMovieGenres();
         setMovieRuntime();
         setMovieRating();
