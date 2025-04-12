@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.Scanner;
-import java.util.Map; // For the Map interface
+import java.util.Map;
 
 /**
  * Displays the customer menu and handles customer actions.
@@ -24,9 +24,9 @@ public class CustomerMenu {
         while (running) {
             System.out.println("\n=== Customer Menu ===");
             System.out.println("1. View All Movies");
-            System.out.println("2. Search Movie");
-            System.out.println("3. Book Ticket");
-            System.out.println("4. View Order History");
+            System.out.println("2. View All Showtimes");
+            System.out.println("3. Search Movie");
+            System.out.println("4. Book Ticket");
             System.out.println("5. View Concessions");
             System.out.println("6. Purchase Concessions");
             System.out.println("7. Logout");
@@ -40,7 +40,7 @@ public class CustomerMenu {
                     viewAllMovies();
                     break;
                 case 2:
-                    viewAllShowtimes(); // Call the new method
+                    viewAllShowtimes();
                     break;
                 case 3:
                     searchMovie(scanner);
@@ -49,19 +49,32 @@ public class CustomerMenu {
                     bookTicket(scanner);
                     break;
                 case 5:
-                    // viewOrderHistory();
-                    break;
-                case 6:
                     viewConcessions();
                     break;
-                case 7:
+                case 6:
                     purchaseConcessions(scanner);
                     break;
-                case 8:
+                case 7:
                     running = false; // Log out and return to the login menu
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    /**
+     * Displays all available concession items.
+     */
+    private void viewConcessions() {
+        System.out.println("\n=== Concessions Menu ===");
+        // Fetch the latest concession data from the global map
+        Map<String, Concession> globalConcessions = Concession.getConcessionMenu();
+        if (globalConcessions.isEmpty()) {
+            System.out.println("No concession items available.");
+        } else {
+            for (Concession item : globalConcessions.values()) {
+                System.out.println(item.getConcessionId() + ": " + item.getItemName() + " - $" + item.getPrice());
             }
         }
     }
@@ -131,21 +144,6 @@ public class CustomerMenu {
 
         System.out.println("Movie not found.");
     }
-
-    /**
-     * Displays all available concession items.
-     */
-    private void viewConcessions() {
-        System.out.println("\n=== Concessions Menu ===");
-        if (concessions.isEmpty()) {
-            System.out.println("No concession items available.");
-        } else {
-            for (Concession item : concessions.values()) {
-                System.out.println(item.getConcessionId() + ": " + item.getItemName() + " - $" + item.getPrice());
-            }
-        }
-    }
-
 
     /**
      * Allows the customer to purchase a concession item and processes the payment.

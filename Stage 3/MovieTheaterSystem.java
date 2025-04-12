@@ -16,7 +16,10 @@ public class MovieTheaterSystem {
         customers = DummyData.createDummyCustomers();
         staff = DummyData.createDummyStaff();
         movies = DummyData.createDummyMovies();
-        concessions = DummyData.createDummyConcessions();
+        concessions = DummyData.createDummyConcessions(); // Initialize dummy concessions
+
+        // Populate the global Concession menu with dummy data
+        Concession.getConcessionMenu().putAll(concessions);
     }
 
     public AuthenticationService getAuthService() {
