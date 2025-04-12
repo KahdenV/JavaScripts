@@ -85,6 +85,11 @@ public class DummyData {
         return concessionMenu;
     }
 
+    /**
+     * Creates a list of dummy showtimes.
+     *
+     * @return A list of dummy showtimes.
+     */
     public static List<Showtime> createDummyShowtimes() {
         List<Showtime> showtimes = new ArrayList<>();
 
@@ -106,4 +111,5 @@ public class DummyData {
 
         return showtimes;
     }
+
 }
