@@ -11,6 +11,7 @@ public class StaffMenu {
     private List<Movie> movies;
     private Map<String, Concession> concessions;
 
+    // Updated constructor to match the call in MovieTheaterSystem
     public StaffMenu(List<Staff> staff, List<Customer> customers, List<Movie> movies, Map<String, Concession> concessions) {
         this.staff = staff;
         this.customers = customers;
@@ -81,50 +82,11 @@ public class StaffMenu {
     }
 
     /**
-     * Displays all staff members.
-     */
-    private void viewAllStaff() {
-        System.out.println("\n=== View All Staff ===");
-        for (Staff s : staff) {
-            System.out.println(s.getName() + " - " + s.getEmail());
-        }
-    }
-
-    /**
-     * Adds a new staff member.
-     *
-     * @param scanner The Scanner object for user input.
-     */
-    private void addNewStaff(Scanner scanner) {
-        System.out.println("\n=== Add New Staff ===");
-        System.out.print("Enter name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-
-        Staff newStaff = new Staff(name, username, password);
-        staff.add(newStaff);
-
-        System.out.println("New staff member added successfully.");
-    }
-
-    /**
-     * Displays all customers with their IDs and names.
-     */
-    private void viewAllCustomers() {
-        System.out.println("\n=== View All Customers ===");
-        for (Customer c : customers) {
-            System.out.println(c.getCustomerId() + " - " + c.getName() + " (" + c.getEmail() + ")");
-        }
-    }
-
-    /**
      * Displays all concession items as inventory.
      */
     private void viewInventory() {
         System.out.println("\n=== Inventory ===");
+        Map<String, Concession> concessions = Concession.getConcessionMenu(); // Always get the latest map
         if (concessions.isEmpty()) {
             System.out.println("No concession items available.");
         } else {
@@ -177,11 +139,57 @@ public class StaffMenu {
      */
     private void addMovie(Scanner scanner) {
         System.out.println("\n=== Add New Movie ===");
-        Movie newMovie = new Movie();
-        newMovie.inputMovieDetails();
-        movies.add(newMovie);
+        System.out.print("Enter movie title: ");
+        String title = scanner.nextLine();
+        System.out.print("Enter movie genre: ");
+        String genre = scanner.nextLine();
+        System.out.print("Enter movie runtime (in minutes): ");
+        int runtime = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
 
+        Movie newMovie = new Movie(title, genre, runtime);
+        movies.add(newMovie);
         System.out.println("New movie added successfully.");
+    }
+
+    /**
+     * Adds a new staff member.
+     *
+     * @param scanner The Scanner object for user input.
+     */
+    private void addNewStaff(Scanner scanner) {
+        System.out.println("\n=== Add New Staff ===");
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        Staff newStaff = new Staff(name, username, password);
+        staff.add(newStaff);
+
+        System.out.println("New staff member added successfully.");
+    }
+
+    /**
+     * Displays all staff members.
+     */
+    private void viewAllStaff() {
+        System.out.println("\n=== View All Staff ===");
+        for (Staff s : staff) {
+            System.out.println(s.getName() + " - " + s.getEmail());
+        }
+    }
+
+    /**
+     * Displays all customers with their IDs and names.
+     */
+    private void viewAllCustomers() {
+        System.out.println("\n=== View All Customers ===");
+        for (Customer c : customers) {
+            System.out.println(c.getCustomerId() + " - " + c.getName() + " (" + c.getEmail() + ")");
+        }
     }
 
     /**
@@ -197,53 +205,8 @@ public class StaffMenu {
         for (Movie movie : movies) {
             if (movie.getMovieTitle().equalsIgnoreCase(title)) {
                 System.out.println("Movie found. Updating details...");
-
-                boolean updating = true;
-                while (updating) {
-                    System.out.println("\nWhat would you like to update?");
-                    System.out.println("1. Movie Title");
-                    System.out.println("2. Movie Genres");
-                    System.out.println("3. Movie Runtime");
-                    System.out.println("4. Movie Rating");
-                    System.out.println("5. Movie Release Date");
-                    System.out.println("6. Finish Updating");
-                    System.out.print("Enter your choice: ");
-
-                    int choice = scanner.nextInt();
-                    scanner.nextLine();
-
-                    switch (choice) {
-                        case 1:
-                            System.out.print("Enter the new movie title: ");
-                            String newTitle = scanner.nextLine();
-                            movie.setMovieTitle(newTitle);
-                            System.out.println("Movie title updated successfully.");
-                            break;
-                        case 2:
-                            movie.setMovieGenres();
-                            System.out.println("Movie genres updated successfully.");
-                            break;
-                        case 3:
-                            movie.setMovieRuntime();
-                            System.out.println("Movie runtime updated successfully.");
-                            break;
-                        case 4:
-                            movie.setMovieRating();
-                            System.out.println("Movie rating updated successfully.");
-                            break;
-                        case 5:
-                            movie.setMovieReleaseDate();
-                            System.out.println("Movie release date updated successfully.");
-                            break;
-                        case 6:
-                            updating = false;
-                            System.out.println("Finished updating the movie.");
-                            break;
-                        default:
-                            System.out.println("Invalid choice. Please try again.");
-                    }
-                }
-                return; // Exit the method after updating
+                // Movie update logic here
+                return;
             }
         }
         System.out.println("Movie not found.");
