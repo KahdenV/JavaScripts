@@ -85,14 +85,13 @@ public class CustomerMenu {
     /**
      * Displays all available concession items.
      */
-    private void viewConcessions() {
-        System.out.println("\n=== Concessions Menu ===");
-        // Fetch the latest concession data from the global map
-        Map<String, Concession> globalConcessions = Concession.getConcessionMenu();
-        if (globalConcessions.isEmpty()) {
-            System.out.println("No concession items available.");
+    public void viewConcessions() {
+        System.out.println("\n=== Available Concessions ===");
+        if (concessions.isEmpty()) {
+            System.out.println("No concessions available.");
         } else {
-            for (Concession item : globalConcessions.values()) {
+            for (Map.Entry<String, Concession> entry : concessions.entrySet()) {
+                Concession item = entry.getValue();
                 System.out.println(item.getConcessionId() + ": " + item.getItemName() + " - $" + item.getPrice());
             }
         }

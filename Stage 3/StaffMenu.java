@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -132,51 +133,72 @@ public class StaffMenu {
     }
 
     private void createAndAssignShowtime(Scanner scanner) {
-        // Select a movie
         System.out.println("\n=== Create and Assign Showtime ===");
+
+        // Ensure movies exist
         if (movies.isEmpty()) {
             System.out.println("No movies available. Please add movies first.");
             return;
         }
-    
+
+        // Display available movies
         System.out.println("Available Movies:");
         for (int i = 0; i < movies.size(); i++) {
             System.out.println((i + 1) + ". " + movies.get(i).getMovieTitle());
         }
-        System.out.print("Select a movie by number: ");
-        int movieChoice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-    
-        if (movieChoice < 1 || movieChoice > movies.size()) {
-            System.out.println("Invalid selection.");
-            return;
+
+        // Select a movie
+        int movieChoice = -1;
+        while (movieChoice < 1 || movieChoice > movies.size()) {
+            System.out.print("Select a movie by number: ");
+            try {
+                movieChoice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                if (movieChoice < 1 || movieChoice > movies.size()) {
+                    System.out.println("Invalid selection. Please choose a valid number.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number corresponding to the movie.");
+                scanner.nextLine(); // Consume invalid input
+            }
         }
+
         Movie selectedMovie = movies.get(movieChoice - 1);
-    
+
         // Create showtime
         System.out.print("Enter showtime (e.g., '12:00 PM'): ");
         String showtimeTime = scanner.nextLine();
-    
-        // Select a screen
+
+        // Ensure screens exist
         if (screens.isEmpty()) {
             System.out.println("No screens available. Please add screens first.");
             return;
         }
-    
+
+        // Display available screens
         System.out.println("Available Screens:");
         for (int i = 0; i < screens.size(); i++) {
             System.out.println((i + 1) + ". " + screens.get(i).getScreenId());
         }
-        System.out.print("Select a screen by number: ");
-        int screenChoice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-    
-        if (screenChoice < 1 || screenChoice > screens.size()) {
-            System.out.println("Invalid selection.");
-            return;
+
+        // Select a screen
+        int screenChoice = -1;
+        while (screenChoice < 1 || screenChoice > screens.size()) {
+            System.out.print("Select a screen by number: ");
+            try {
+                screenChoice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                if (screenChoice < 1 || screenChoice > screens.size()) {
+                    System.out.println("Invalid selection. Please choose a valid number.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number corresponding to the screen.");
+                scanner.nextLine(); // Consume invalid input
+            }
         }
+
         Screen selectedScreen = screens.get(screenChoice - 1);
-    
+
         // Create and save the new showtime
         new Showtime(selectedMovie, selectedScreen, showtimeTime);
         System.out.println("Showtime '" + showtimeTime + "' assigned to screen '" + selectedScreen.getScreenId() + "' for movie '" + selectedMovie.getMovieTitle() + "'.");
@@ -239,7 +261,6 @@ public class StaffMenu {
      */
     private void viewInventory() {
         System.out.println("\n=== Inventory ===");
-        Map<String, Concession> concessions = Concession.getConcessionMenu(); // Always get the latest map
         if (concessions.isEmpty()) {
             System.out.println("No concession items available.");
         } else {
