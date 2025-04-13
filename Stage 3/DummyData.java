@@ -10,14 +10,25 @@ public class DummyData {
     // Store concession items in a static map
     private static final Map<String, Concession> concessionMenu = new HashMap<>();
     private static List<Showtime> showtimes = new ArrayList<>();
-
-    public static List<Showtime> getShowtimes() {
-        return new ArrayList<>(showtimes); // Return a copy to prevent direct modification
-    }
+    private static Map<String, List<Ticket>> ticketsByCustomer = new HashMap<>();
 
     public static void addShowtime(Showtime showtime) {
         showtimes.add(showtime);
     }
+
+    public static List<Showtime> getShowtimes() {
+        return new ArrayList<>(showtimes);
+    }
+
+    public static void addTicket(String customerId, Ticket ticket) {
+        ticketsByCustomer.putIfAbsent(customerId, new ArrayList<>());
+        ticketsByCustomer.get(customerId).add(ticket);
+    }
+
+    public static List<Ticket> getTicketsByCustomer(String customerId) {
+        return ticketsByCustomer.getOrDefault(customerId, new ArrayList<>());
+    }
+
 
     /**
      * Creates a list of dummy customers.
@@ -26,8 +37,8 @@ public class DummyData {
      */
     public static List<Customer> createDummyCustomers() {
         List<Customer> customers = new ArrayList<>();
-        customers.add(new Customer("John Doe", "john", "pass123"));
-        customers.add(new Customer("Jane Smith", "jane", "pass456"));
+        customers.add(new Customer("John Doe", "john", "pass123", "Customer1"));
+        customers.add(new Customer("Jane Smith", "jane", "pass456", "Customer2"));
         return customers;
     }
 

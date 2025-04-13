@@ -6,6 +6,7 @@ import java.util.List;
 public class AuthenticationService {
     private List<Customer> customers;
     private List<Staff> staff;
+    private int guestCounter = 1;
 
     public AuthenticationService(List<Customer> customers, List<Staff> staff) {
         this.customers = customers;
@@ -38,7 +39,8 @@ public class AuthenticationService {
      * @return A new Guest object.
      */
     public Guest loginAsGuest() {
-        return new Guest();
+        String guestId = "guest" + guestCounter++; // Generate a unique guest ID
+        return new Guest(guestId);
     }
 
     /**
@@ -48,5 +50,14 @@ public class AuthenticationService {
      */
     public void addCustomer(Customer newCustomer) {
         customers.add(newCustomer);
+    }
+
+    /**
+     * Retrieves the list of customers.
+     *
+     * @return A list of all customers.
+     */
+    public List<Customer> getCustomers() {
+        return customers;
     }
 }

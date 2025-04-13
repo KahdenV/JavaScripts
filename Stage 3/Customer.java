@@ -1,24 +1,22 @@
-/**
- * Class representing a customer, extends the Person class.
- */
 public class Customer extends Person {
-    private static int customerIdCounter = 1; // Static counter for unique customer IDs
-    private final String customerId;
+    private String id; // Unique ID for the customer
 
-    public Customer(String name, String email, String password) {
+    public Customer(String name, String email, String password, String id) {
         super(name, email, password);
-        this.customerId = generateUniqueCustomerId();
+        this.id = id;
     }
 
     /**
-     * Generates a unique ID for each customer.
-     * @return A unique customer ID as a string.
+     * Retrieves the customer's unique ID.
+     *
+     * @return The customer's ID.
      */
-    private static synchronized String generateUniqueCustomerId() {
-        return "Customer" + customerIdCounter++;
+    public String getCustomerId() {
+        return id;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    @Override
+    public String toString() {
+        return "Customer ID: " + id + ", Name: " + getName() + ", Email: " + getEmail();
     }
 }

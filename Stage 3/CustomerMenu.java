@@ -210,14 +210,22 @@ public class CustomerMenu {
             return;
         }
     
-        // Reduce available seats and confirm ticket purchase
+        // Create a ticket
+        String ticketId = "TICKET-" + (DummyData.getTicketsByCustomer(customerId).size() + 1);
+        Ticket newTicket = new Ticket(ticketId, customerId, selectedShowtime, selectedShowtime.getShownMovie());
+    
+        // Reduce available seats and save the ticket
         selectedShowtime.reduceAvailableSeats(1);
+        DummyData.addTicket(customerId, newTicket);
+    
         System.out.println("Ticket purchased successfully!");
-        System.out.println("Showtime Details: " + selectedShowtime);
+        System.out.println(newTicket);
     }
 
     public void viewTickets() {
         System.out.println("\n=== Your Tickets ===");
+        List<Ticket> tickets = DummyData.getTicketsByCustomer(customerId);
+    
         if (tickets.isEmpty()) {
             System.out.println("You have no tickets.");
         } else {

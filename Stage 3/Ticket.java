@@ -31,9 +31,9 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket ID: " + ticketId +
-               "\nUser ID: " + userId +
-               "\nMovie: " + movie.getMovieTitle() +
-               "\nShowtime: " + showtime.getTime() +
-               "\nScreen: " + showtime.getShowingScreen().getScreenId();
+            "\nUser ID: " + userId +
+            "\nMovie: " + movie.getMovieTitle() +
+            "\nShowtime: " + showtime.getTime() +
+            "\nScreen: " + showtime.getShowingScreen().getScreenId();
     }
 }

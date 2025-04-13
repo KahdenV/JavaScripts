@@ -67,4 +67,12 @@ public class Showtime {
         System.out.println("Screen number: " + showingScreen.getScreenId());
         System.out.println("Time: " + time);
     }
+
+        @Override
+    public String toString() {
+        return "Movie: " + shownMovie.getMovieTitle() +
+            ", Time: " + time +
+            ", Screen: " + showingScreen.getScreenId() +
+            ", Available Seats: " + availableSeats;
+    }
 }

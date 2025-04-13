@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class ApplicationManager {
     private MenuManager menuManager;
     private AuthenticationService authService;
+    private int guestCounter = 1; // Counter to track guest IDs
 
     public ApplicationManager(MenuManager menuManager, AuthenticationService authService) {
         this.menuManager = menuManager;
@@ -75,7 +76,8 @@ public class ApplicationManager {
                     }
                     break;
                 case 2:
-                    return new Customer("Guest", "guest", ""); // Guest login
+                    String guestId = "guest" + guestCounter++; // Generate a unique guest ID
+                    return new Guest(guestId); // Create and return a new Guest with the ID
                 case 3:
                     createAccount(scanner);
                     break;
@@ -101,7 +103,10 @@ public class ApplicationManager {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
-        Customer newCustomer = new Customer(name, username, password);
+        // Generate a unique ID for the customer (optional if Customer already includes ID logic)
+        String customerId = "Customer" + (authService.getCustomers().size() + 1);
+
+        Customer newCustomer = new Customer(name, username, password, customerId);
         authService.addCustomer(newCustomer);
 
         System.out.println("Account created successfully. You can now login.");
