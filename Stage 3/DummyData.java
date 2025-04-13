@@ -9,13 +9,14 @@ import java.util.HashMap;
 public class DummyData {
     // Store concession items in a static map
     private static final Map<String, Concession> concessionMenu = new HashMap<>();
-    private static List<Showtime> showtimes = null;
+    private static List<Showtime> showtimes = new ArrayList<>();
 
     public static List<Showtime> getShowtimes() {
-        if (showtimes == null) {
-            showtimes = createDummyShowtimes(); // Initialize only once
-        }
-        return showtimes;
+        return new ArrayList<>(showtimes); // Return a copy to prevent direct modification
+    }
+
+    public static void addShowtime(Showtime showtime) {
+        showtimes.add(showtime);
     }
 
     /**

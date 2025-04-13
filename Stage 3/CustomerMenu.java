@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Map;
@@ -10,6 +11,7 @@ public class CustomerMenu {
     private String customerId;
     private Map<String, Concession> concessions;
     private List<Showtime> showtimes;
+    private List<Ticket> tickets = new ArrayList<>();
 
     public CustomerMenu(List<Movie> movies, String customerId, Map<String, Concession> concessions) {
         this.movies = movies;
@@ -30,9 +32,10 @@ public class CustomerMenu {
             System.out.println("2. View All Showtimes");
             System.out.println("3. Search Movie");
             System.out.println("4. Book Ticket");
-            System.out.println("5. View Concessions");
-            System.out.println("6. Purchase Concessions");
-            System.out.println("7. Logout");
+            System.out.println("5. View Your Tickets");
+            System.out.println("6. View Concessions");
+            System.out.println("7. Purchase Concessions");
+            System.out.println("8. Logout");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -49,15 +52,18 @@ public class CustomerMenu {
                     searchMovie(scanner);
                     break;
                 case 4:
-                    bookTicket(scanner);
+                    buyTicket(scanner);
                     break;
                 case 5:
-                    viewConcessions();
+                    viewTickets();
                     break;
                 case 6:
-                    purchaseConcessions(scanner);
+                    viewConcessions();
                     break;
                 case 7:
+                    purchaseConcessions(scanner);
+                    break;
+                case 8:
                     running = false; // Log out and return to the login menu
                     break;
                 default:
@@ -68,16 +74,13 @@ public class CustomerMenu {
 
     public void viewAllShowtimes() {
         System.out.println("\n=== View All Showtimes ===");
-        List<Showtime> showtimes = Showtime.getShowtimeList(); // Retrieve showtimes from the shared list
+        List<Showtime> showtimes = DummyData.getShowtimes();
     
         if (showtimes.isEmpty()) {
             System.out.println("No showtimes available.");
         } else {
-            for (Showtime showtime : showtimes) {
-                System.out.println("Movie being shown: " + showtime.getShownMovie().getMovieTitle());
-                System.out.println("Screen number: " + showtime.getShowingScreen().getScreenId());
-                System.out.println("Time: " + showtime.getTime());
-                System.out.println();
+            for (int i = 0; i < showtimes.size(); i++) {
+                System.out.println((i + 1) + ". " + showtimes.get(i));
             }
         }
     }
@@ -154,26 +157,6 @@ public class CustomerMenu {
      *
      * @param scanner The Scanner object for user input.
      */
-    private void bookTicket(Scanner scanner) {
-        System.out.println("\n=== Book Ticket ===");
-        System.out.print("Enter movie title to book: ");
-        String movieTitle = scanner.nextLine();
-
-        for (Movie movie : movies) {
-            if (movie.getMovieTitle().equalsIgnoreCase(movieTitle)) {
-                System.out.print("Enter ticket price: ");
-                double ticketPrice = scanner.nextDouble();
-                scanner.nextLine(); // Consume newline
-
-                // Process payment
-                Payment payment = Payment.processPayment(customerId, ticketPrice);
-                System.out.println("Ticket booked successfully! Payment ID: " + payment.getPaymentId());
-                return;
-            }
-        }
-
-        System.out.println("Movie not found.");
-    }
 
     /**
      * Allows the customer to purchase a concession item and processes the payment.
@@ -192,6 +175,55 @@ public class CustomerMenu {
             System.out.println("Concession purchased successfully! Payment ID: " + payment.getPaymentId());
         } else {
             System.out.println("Concession item not found.");
+        }
+    }
+
+    public void buyTicket(Scanner scanner) {
+        System.out.println("\n=== Buy Ticket ===");
+        List<Showtime> showtimes = DummyData.getShowtimes();
+    
+        if (showtimes.isEmpty()) {
+            System.out.println("No showtimes available.");
+            return;
+        }
+    
+        System.out.println("Available Showtimes:");
+        for (int i = 0; i < showtimes.size(); i++) {
+            System.out.println((i + 1) + ". " + showtimes.get(i));
+        }
+    
+        // Select a showtime
+        System.out.print("Select a showtime by number: ");
+        int showtimeChoice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+    
+        if (showtimeChoice < 1 || showtimeChoice > showtimes.size()) {
+            System.out.println("Invalid choice.");
+            return;
+        }
+    
+        Showtime selectedShowtime = showtimes.get(showtimeChoice - 1);
+    
+        // Check available seats
+        if (selectedShowtime.getAvailableSeats() <= 0) {
+            System.out.println("No seats available for this showtime.");
+            return;
+        }
+    
+        // Reduce available seats and confirm ticket purchase
+        selectedShowtime.reduceAvailableSeats(1);
+        System.out.println("Ticket purchased successfully!");
+        System.out.println("Showtime Details: " + selectedShowtime);
+    }
+
+    public void viewTickets() {
+        System.out.println("\n=== Your Tickets ===");
+        if (tickets.isEmpty()) {
+            System.out.println("You have no tickets.");
+        } else {
+            for (Ticket ticket : tickets) {
+                System.out.println(ticket);
+            }
         }
     }
 }

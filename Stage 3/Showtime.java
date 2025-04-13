@@ -8,6 +8,7 @@ public class Showtime {
     protected Screen showingScreen;
     protected String time;
     private static List<Showtime> showtimeList = new ArrayList<>(); // Static list to store all showtimes
+    private int availableSeats;
 
     // Constructor
     public Showtime(Movie shownMovie, Screen showingScreen, String time) {
@@ -15,6 +16,7 @@ public class Showtime {
         this.showingScreen = showingScreen;
         this.time = time;
         showtimeList.add(this); // Add the new showtime to the list
+        this.availableSeats = showingScreen.getCapacity(); // Set available seats to screen capacity
     }
 
     // Getter for the list of all showtimes
@@ -45,6 +47,18 @@ public class Showtime {
 
     public void setTime(String newTime) {
         time = newTime;
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void reduceAvailableSeats(int numberOfSeats) {
+        if (availableSeats >= numberOfSeats) {
+            availableSeats -= numberOfSeats;
+        } else {
+            System.out.println("Not enough seats available.");
+        }
     }
 
     // Method to print showtime details
