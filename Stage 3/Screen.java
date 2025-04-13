@@ -6,6 +6,7 @@ public class Screen {
     private int capacity;
     private int availableSeats;
     private List<String> showTimes;
+    private List<Screen> screens = new ArrayList<>();
 
     // Constructor
     public Screen(String screenId, int capacity) {
@@ -57,4 +58,5 @@ public class Screen {
                 ", Available Seats: " + availableSeats +
                 ", ShowTimes: " + showTimes;
     }
+
 }

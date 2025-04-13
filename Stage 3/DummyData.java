@@ -93,21 +93,19 @@ public class DummyData {
         return concessionMenu;
     }
 
-    public static List<Showtime> createDummyShowtimes() {
-        if (!Showtime.getShowtimeList().isEmpty()) {
-            return Showtime.getShowtimeList(); // Return the existing list if already populated
-        }
-    
+    private static List<Showtime> createDummyShowtimes() {
+        List<Showtime> showtimes = new ArrayList<>();
+
         // Fetch dummy movies and screens
         List<Movie> movies = createDummyMovies();
         Screen screen1 = new Screen("Screen 1", 100);
         Screen screen2 = new Screen("Screen 2", 150);
-    
+
         // Add some dummy showtimes
-        new Showtime(movies.get(0), screen1, "12:00 PM");
-        new Showtime(movies.get(1), screen2, "3:00 PM");
-    
-        return Showtime.getShowtimeList();
+        showtimes.add(new Showtime(movies.get(0), screen1, "12:00 PM"));
+        showtimes.add(new Showtime(movies.get(1), screen2, "3:00 PM"));
+
+        return showtimes;
     }
 
 }

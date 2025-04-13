@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ public class StaffMenu {
     private List<Customer> customers;
     private List<Movie> movies;
     private Map<String, Concession> concessions;
+    private List<Screen> screens = new ArrayList<>();
 
     // Updated constructor to match the call in MovieTheaterSystem
     public StaffMenu(List<Staff> staff, List<Customer> customers, List<Movie> movies, Map<String, Concession> concessions) {
@@ -35,7 +37,8 @@ public class StaffMenu {
             System.out.println("8. Update Movie");
             System.out.println("9. Manage Refunds");
             System.out.println("10. View Payments");
-            System.out.println("11. Logout");
+            System.out.println("11. Manage Screens");
+            System.out.println("12. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -73,11 +76,161 @@ public class StaffMenu {
                     viewPayments();
                     break;
                 case 11:
+                    staffMenuOptions(); // Call the method to show staff menu options
+                    break;
+                case 12:
                     running = false; // Log out and return to the login menu
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+        }
+    }
+
+    public void staffMenuOptions() {
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+
+        while (running) {
+            System.out.println("\n=== Staff Menu ===");
+            System.out.println("1. View All Screens");
+            System.out.println("2. Add New Screen");
+            System.out.println("3. Edit a Screen");
+            System.out.println("4. Create and Assign Showtime");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    displayScreens();
+                    break;
+                case 2:
+                    System.out.println("Enter screen ID:");
+                    String screenId = scanner.nextLine();
+                    System.out.println("Enter capacity:");
+                    int capacity = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline character
+                    createScreen(screenId, capacity);
+                    break;
+                case 3:
+                    editScreen(scanner);
+                    break;
+                case 4:
+                    createAndAssignShowtime(scanner);
+                    break;
+                case 5:
+                    running = false;
+                    System.out.println("Exiting Staff Menu.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private void createAndAssignShowtime(Scanner scanner) {
+        // Select a movie
+        System.out.println("\n=== Create and Assign Showtime ===");
+        if (movies.isEmpty()) {
+            System.out.println("No movies available. Please add movies first.");
+            return;
+        }
+    
+        System.out.println("Available Movies:");
+        for (int i = 0; i < movies.size(); i++) {
+            System.out.println((i + 1) + ". " + movies.get(i).getMovieTitle());
+        }
+        System.out.print("Select a movie by number: ");
+        int movieChoice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+    
+        if (movieChoice < 1 || movieChoice > movies.size()) {
+            System.out.println("Invalid selection.");
+            return;
+        }
+        Movie selectedMovie = movies.get(movieChoice - 1);
+    
+        // Create showtime
+        System.out.print("Enter showtime (e.g., '12:00 PM'): ");
+        String showtimeTime = scanner.nextLine();
+    
+        // Select a screen
+        if (screens.isEmpty()) {
+            System.out.println("No screens available. Please add screens first.");
+            return;
+        }
+    
+        System.out.println("Available Screens:");
+        for (int i = 0; i < screens.size(); i++) {
+            System.out.println((i + 1) + ". " + screens.get(i).getScreenId());
+        }
+        System.out.print("Select a screen by number: ");
+        int screenChoice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+    
+        if (screenChoice < 1 || screenChoice > screens.size()) {
+            System.out.println("Invalid selection.");
+            return;
+        }
+        Screen selectedScreen = screens.get(screenChoice - 1);
+    
+        // Create and save the new showtime
+        new Showtime(selectedMovie, selectedScreen, showtimeTime);
+        System.out.println("Showtime '" + showtimeTime + "' assigned to screen '" + selectedScreen.getScreenId() + "' for movie '" + selectedMovie.getMovieTitle() + "'.");
+    }
+
+    // Other methods like createScreen, displayScreens, editScreen, etc., remain unchanged
+    public void createScreen(String screenId, int capacity) {
+        Screen screen = new Screen(screenId, capacity);
+        screens.add(screen);
+        System.out.println("Screen created: " + screenId);
+    }
+
+    public void displayScreens() {
+        if (screens.isEmpty()) {
+            System.out.println("No screens available.");
+        } else {
+            for (Screen screen : screens) {
+                System.out.println(screen);
+            }
+        }
+    }
+
+    private void editScreen(Scanner scanner) {
+        System.out.println("Enter screen ID to edit:");
+        String editScreenId = scanner.nextLine();
+        boolean screenFound = false;
+
+        for (Screen screen : screens) {
+            if (screen.getScreenId().equals(editScreenId)) {
+                screenFound = true;
+                System.out.println("1. Update Available Seats");
+                System.out.println("2. Add a Showtime");
+                System.out.println("Enter your choice:");
+                int editChoice = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+
+                if (editChoice == 1) {
+                    System.out.println("Enter new available seats:");
+                    int availableSeats = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline character
+                    screen.updateAvailableSeats(availableSeats);
+                } else if (editChoice == 2) {
+                    System.out.println("Enter new showtime:");
+                    String newShowtime = scanner.nextLine();
+                    screen.assignShowTime(newShowtime);
+                } else {
+                    System.out.println("Invalid option.");
+                }
+                break;
+            }
+        }
+
+        if (!screenFound) {
+            System.out.println("Screen not found.");
         }
     }
 

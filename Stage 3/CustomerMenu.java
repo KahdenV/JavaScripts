@@ -66,18 +66,19 @@ public class CustomerMenu {
         }
     }
 
-    /**
-     * Displays all showtimes.
-     */
-    private void viewAllShowtimes() {
+    public void viewAllShowtimes() {
         System.out.println("\n=== View All Showtimes ===");
-        if (showtimes == null || showtimes.isEmpty()) {
+        List<Showtime> showtimes = Showtime.getShowtimeList(); // Retrieve showtimes from the shared list
+    
+        if (showtimes.isEmpty()) {
             System.out.println("No showtimes available.");
-            return;
-        }
-
-        for (Showtime showtime : showtimes) {
-            showtime.printShowtimeDetails(); // Print details for each showtime
+        } else {
+            for (Showtime showtime : showtimes) {
+                System.out.println("Movie being shown: " + showtime.getShownMovie().getMovieTitle());
+                System.out.println("Screen number: " + showtime.getShowingScreen().getScreenId());
+                System.out.println("Time: " + showtime.getTime());
+                System.out.println();
+            }
         }
     }
 
