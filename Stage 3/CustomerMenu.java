@@ -13,9 +13,9 @@ public class CustomerMenu {
     private List<Showtime> showtimes;
     private List<Ticket> tickets = new ArrayList<>();
 
-    public CustomerMenu(List<Movie> movies, String customerId, Map<String, Concession> concessions) {
+    public CustomerMenu(List<Movie> movies, Person user, Map<String, Concession> concessions) {
         this.movies = movies;
-        this.customerId = customerId;
+        this.customerId = user.getId(); // Dynamically fetch the user ID
         this.concessions = concessions;
     
         // Use centralized showtimes
@@ -210,13 +210,13 @@ public class CustomerMenu {
             return;
         }
     
-        // Create a ticket
+        // Generate a ticket ID and use the correct customer ID
         String ticketId = "TICKET-" + (DummyData.getTicketsByCustomer(customerId).size() + 1);
-        Ticket newTicket = new Ticket(ticketId, customerId, selectedShowtime, selectedShowtime.getShownMovie());
+        Ticket newTicket = new Ticket(ticketId, this.customerId, selectedShowtime, selectedShowtime.getShownMovie());
     
         // Reduce available seats and save the ticket
         selectedShowtime.reduceAvailableSeats(1);
-        DummyData.addTicket(customerId, newTicket);
+        DummyData.addTicket(this.customerId, newTicket);
     
         System.out.println("Ticket purchased successfully!");
         System.out.println(newTicket);

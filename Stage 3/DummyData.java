@@ -36,8 +36,9 @@ public class DummyData {
      */
     public static List<Customer> createDummyCustomers() {
         List<Customer> customers = new ArrayList<>();
-        customers.add(new Customer("John Doe", "john", "pass123", "Customer1"));
-        customers.add(new Customer("Jane Smith", "jane", "pass456", "Customer2"));
+        customers.add(new Customer("Customer1", "John Doe", "john@example.com", "password123"));
+        customers.add(new Customer("Customer2", "Jane Smith", "jane@example.com", "pass456"));
+        // Ensure no email or password is left null
         return customers;
     }
 

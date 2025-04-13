@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class AuthenticationService {
@@ -10,14 +11,25 @@ public class AuthenticationService {
         this.staff = staff;
     }
 
+    // Default constructor (optional)
+    public AuthenticationService() {
+        this.customers = DummyData.createDummyCustomers();
+        this.staff = DummyData.createDummyStaff();
+    }
+
     public Person authenticate(String username, String password) {
         for (Customer customer : customers) {
-            if (customer.getEmail().equals(username) && customer.getPassword().equals(password)) {
+            // Debug log to check stored customer data
+            System.out.println("Checking customer: " + customer.getEmail() + ", " + customer.getPassword());
+    
+            if (customer.getEmail() != null && customer.getPassword() != null &&
+                customer.getEmail().equals(username) && customer.getPassword().equals(password)) {
                 return customer;
             }
         }
         for (Staff staffMember : staff) {
-            if (staffMember.getEmail().equals(username) && staffMember.getPassword().equals(password)) {
+            if (staffMember.getEmail() != null && staffMember.getPassword() != null &&
+                staffMember.getEmail().equals(username) && staffMember.getPassword().equals(password)) {
                 return staffMember;
             }
         }
@@ -29,8 +41,8 @@ public class AuthenticationService {
         return new Guest(guestId);
     }
 
-    public void addCustomer(Customer newCustomer) {
-        customers.add(newCustomer);
+    public void addCustomer(Customer customer) {
+        customers.add(customer); // Ensure customers is properly initialized as a list
     }
 
     public List<Customer> getCustomers() {

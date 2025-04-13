@@ -53,11 +53,14 @@ public class MovieTheaterSystem {
      * Shows the main menu and starts the application.
      */
     public void showMainMenu() {
+        // Initialize the MenuManager without pre-creating CustomerMenu
         MenuManager menuManager = new MenuManager(
-            new CustomerMenu(movies, generateUniqueCustomerId(), concessions),
-            new StaffMenu(staff, customers, movies, concessions)
+            null, // CustomerMenu will be initialized dynamically
+            new StaffMenu(staff, customers, movies, concessions) // StaffMenu remains the same
         );
         ApplicationManager appManager = new ApplicationManager(menuManager, authService);
+    
+        // Start the application lifecycle
         appManager.start();
     }
 

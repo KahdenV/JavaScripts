@@ -3,6 +3,7 @@
  */
 public class Person {
     private static int idCounter = 1; 
+    private String id; // Declare the id field
     private String name;
     private String email;
     private String password;
@@ -24,6 +25,10 @@ public class Person {
         return name;
     }
 
+    public String getId() {
+        return this.id; // Replace with your actual ID retrieval logic
+    }
+
     public String getEmail() {
         return email;
     }
@@ -43,5 +48,13 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Person(String id) {
+        this.id = id; // Initialize the id field in the constructor
+    }
+
+    public void setId(String id) {
+        this.id = id; // Provide a setter method if needed
     }
 }
