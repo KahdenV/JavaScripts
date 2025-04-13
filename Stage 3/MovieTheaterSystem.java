@@ -10,7 +10,6 @@ public class MovieTheaterSystem {
     private AuthenticationService authService;
     private List<Movie> movies;
     private Map<String, Concession> concessions;
-    private static int customerIdCounter = 1;
     private List<Showtime> showtimes;
 
     public MovieTheaterSystem() {
@@ -59,17 +58,11 @@ public class MovieTheaterSystem {
             new StaffMenu(staff, customers, movies, concessions) // StaffMenu remains the same
         );
         ApplicationManager appManager = new ApplicationManager(menuManager, authService);
-    
+        appManager.setMovies(movies);
+        appManager.setConcessions(concessions);
+
         // Start the application lifecycle
         appManager.start();
-    }
-
-    /**
-     * Generates a unique customer ID dynamically.
-     * @return A unique customer ID as a string.
-     */
-    private synchronized String generateUniqueCustomerId() {
-        return "Customer" + customerIdCounter++;
     }
 
     public static void main(String[] args) {

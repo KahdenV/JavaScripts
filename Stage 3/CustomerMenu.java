@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Map;
@@ -11,7 +10,6 @@ public class CustomerMenu {
     private String customerId;
     private Map<String, Concession> concessions;
     private List<Showtime> showtimes;
-    private List<Ticket> tickets = new ArrayList<>();
 
     public CustomerMenu(List<Movie> movies, Person user, Map<String, Concession> concessions) {
         this.movies = movies;

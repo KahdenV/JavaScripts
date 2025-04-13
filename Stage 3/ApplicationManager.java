@@ -8,16 +8,12 @@ import java.util.Scanner;
 public class ApplicationManager {
     private MenuManager menuManager;
     private AuthenticationService authService;
-    private int guestCounter = 1; // Counter to track guest IDs
-    private int customerCounter = 1; // Counter to track customer IDs
     private List<Movie> movies; // Add movies list
     private Map<String, Concession> concessions; // Add concessions map
 
     public ApplicationManager(MenuManager menuManager, AuthenticationService authService) {
         this.menuManager = menuManager;
         this.authService = authService;
-        this.movies = movies; // Initialize movies
-        this.concessions = concessions; // Initialize concessions
     }
 
     /**
@@ -32,6 +28,14 @@ public class ApplicationManager {
      */
     public void shutdown() {
         System.out.println("System shutting down...");
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+    
+    public void setConcessions(Map<String, Concession> concessions) {
+        this.concessions = concessions;
     }
 
     /**

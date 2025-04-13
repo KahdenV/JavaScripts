@@ -36,8 +36,8 @@ public class DummyData {
      */
     public static List<Customer> createDummyCustomers() {
         List<Customer> customers = new ArrayList<>();
-        customers.add(new Customer("Customer1", "John Doe", "john@example.com", "password123"));
-        customers.add(new Customer("Customer2", "Jane Smith", "jane@example.com", "pass456"));
+        customers.add(new Customer("Customer1", "John Doe", "john", "pass123"));
+        customers.add(new Customer("Customer2", "Jane Smith", "jane", "pass456"));
         // Ensure no email or password is left null
         return customers;
     }
@@ -103,21 +103,6 @@ public class DummyData {
             concessionMenu.put("C011", new Concession("C011", "Ice Cream", 4.50));
         }
         return concessionMenu;
-    }
-
-    private static List<Showtime> createDummyShowtimes() {
-        List<Showtime> showtimes = new ArrayList<>();
-
-        // Fetch dummy movies and screens
-        List<Movie> movies = createDummyMovies();
-        Screen screen1 = new Screen("Screen 1", 100);
-        Screen screen2 = new Screen("Screen 2", 150);
-
-        // Add some dummy showtimes
-        showtimes.add(new Showtime(movies.get(0), screen1, "12:00 PM"));
-        showtimes.add(new Showtime(movies.get(1), screen2, "3:00 PM"));
-
-        return showtimes;
     }
 
 }
