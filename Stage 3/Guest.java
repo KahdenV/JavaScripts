@@ -1,9 +1,8 @@
 public class Guest extends Person {
     private String id; // Unique ID for the guest
 
-    // Constructor for creating a Guest with a unique ID
     public Guest(String id) {
-        super("Guest", "guest", ""); // Calling the parent class constructor with default values
+        super("Guest", "guest", ""); // Default values for Guest
         this.id = id;
     }
 

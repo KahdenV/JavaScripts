@@ -20,13 +20,12 @@ public class DummyData {
         return new ArrayList<>(showtimes);
     }
 
-    public static void addTicket(String customerId, Ticket ticket) {
-        ticketsByCustomer.putIfAbsent(customerId, new ArrayList<>());
-        ticketsByCustomer.get(customerId).add(ticket);
-    }
-
     public static List<Ticket> getTicketsByCustomer(String customerId) {
         return ticketsByCustomer.getOrDefault(customerId, new ArrayList<>());
+    }
+    
+    public static void addTicket(String customerId, Ticket ticket) {
+        ticketsByCustomer.computeIfAbsent(customerId, k -> new ArrayList<>()).add(ticket);
     }
 
 

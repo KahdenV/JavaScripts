@@ -7,6 +7,7 @@ public class ApplicationManager {
     private MenuManager menuManager;
     private AuthenticationService authService;
     private int guestCounter = 1; // Counter to track guest IDs
+    private int customerCounter = 1; // Counter to track customer IDs
 
     public ApplicationManager(MenuManager menuManager, AuthenticationService authService) {
         this.menuManager = menuManager;
@@ -34,6 +35,11 @@ public class ApplicationManager {
         while (true) {
             Person authenticatedUser = authenticateUser();
             if (authenticatedUser != null) {
+                if (authenticatedUser instanceof Guest) {
+                    System.out.println("Logged in as: " + ((Guest) authenticatedUser).getId());
+                } else if (authenticatedUser instanceof Customer) {
+                    System.out.println("Logged in as: " + ((Customer) authenticatedUser).getCustomerId());
+                }
                 menuManager.displayMainMenu(authenticatedUser);
             } else {
                 System.out.println("Exiting the system.");
@@ -102,13 +108,13 @@ public class ApplicationManager {
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
-
-        // Generate a unique ID for the customer (optional if Customer already includes ID logic)
-        String customerId = "Customer" + (authService.getCustomers().size() + 1);
-
+    
+        // Generate a unique ID for the customer
+        String customerId = "Customer" + customerCounter++;
+    
         Customer newCustomer = new Customer(name, username, password, customerId);
         authService.addCustomer(newCustomer);
-
+    
         System.out.println("Account created successfully. You can now login.");
     }
 }

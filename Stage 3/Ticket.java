@@ -1,23 +1,23 @@
 public class Ticket {
     private String ticketId;
-    private String userId; // The ID of the user who purchased the ticket
-    private Showtime showtime; // The showtime the ticket is for
-    private Movie movie; // The movie being shown
+    private String customerId;
+    private Showtime showtime;
+    private Movie movie;
 
-    public Ticket(String ticketId, String userId, Showtime showtime, Movie movie) {
+    public Ticket(String ticketId, String customerId, Showtime showtime, Movie movie) {
         this.ticketId = ticketId;
-        this.userId = userId;
+        this.customerId = customerId;
         this.showtime = showtime;
         this.movie = movie;
     }
 
-    // Getters
+    // Getters and toString() for displaying ticket details
     public String getTicketId() {
         return ticketId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getCustomerId() {
+        return customerId;
     }
 
     public Showtime getShowtime() {
@@ -30,10 +30,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket ID: " + ticketId +
-            "\nUser ID: " + userId +
-            "\nMovie: " + movie.getMovieTitle() +
-            "\nShowtime: " + showtime.getTime() +
-            "\nScreen: " + showtime.getShowingScreen().getScreenId();
+        return "Ticket ID: " + ticketId + ", User ID: " + customerId + ", Movie: " 
+                + movie.getMovieTitle() + ", Showtime: " + showtime.getTime();
     }
 }
