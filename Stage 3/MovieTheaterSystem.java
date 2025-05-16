@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Map;
 
 /**
  * Main class for managing the movie theater system.
@@ -7,10 +8,19 @@ public class MovieTheaterSystem {
     private List<Customer> customers;
     private List<Staff> staff;
     private AuthenticationService authService;
+    private List<Movie> movies;
+    private Map<String, Concession> concessions;
+    private List<Showtime> showtimes;
 
     public MovieTheaterSystem() {
         customers = DummyData.createDummyCustomers();
         staff = DummyData.createDummyStaff();
+        movies = DummyData.createDummyMovies();
+        concessions = DummyData.createDummyConcessions(); // Initialize dummy concessions
+        showtimes = DummyData.getShowtimes(); // Initialize showtimes
+
+        // Populate the global Concession menu with dummy data
+        Concession.getConcessionMenu().putAll(concessions);
     }
 
     public AuthenticationService getAuthService() {
@@ -26,11 +36,32 @@ public class MovieTheaterSystem {
     }
 
     /**
+     * Returns the concessions data.
+     *
+     * @return A map of concession items.
+     */
+    public Map<String, Concession> getConcessions() {
+        return concessions;
+    }
+
+    public List<Showtime> getShowtimes() {
+        return showtimes;
+    }
+
+    /**
      * Shows the main menu and starts the application.
      */
     public void showMainMenu() {
-        MenuManager menuManager = new MenuManager(new CustomerMenu(), new StaffMenu(staff, customers));
+        // Initialize the MenuManager without pre-creating CustomerMenu
+        MenuManager menuManager = new MenuManager(
+            null, // CustomerMenu will be initialized dynamically
+            new StaffMenu(staff, customers, movies, concessions) // StaffMenu remains the same
+        );
         ApplicationManager appManager = new ApplicationManager(menuManager, authService);
+        appManager.setMovies(movies);
+        appManager.setConcessions(concessions);
+
+        // Start the application lifecycle
         appManager.start();
     }
 
