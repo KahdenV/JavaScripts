@@ -31,7 +31,7 @@ public class MainMenu_GUI extends JFrame {
 
         // Main panel to hold the button groups (Employees, Invoices, Payroll)
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 3, 10, 0));
+        buttonPanel.setLayout(new GridLayout(1, 3, 20, 0));
         buttonPanel.setBackground(new Color(70, 110, 160));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         add(buttonPanel, BorderLayout.CENTER);
@@ -39,7 +39,8 @@ public class MainMenu_GUI extends JFrame {
         // === Employees Panel ===
         JPanel employeePanel = createPanel("Employees", new Color(173, 216, 230));
         employeePanel.add(createButton("Open Job List"));
-        employeePanel.add(createButton("Employee List"));
+        JButton employeeListButton = createButton("Employee List");
+        employeePanel.add(employeeListButton);
 
         // === Invoices Panel ===
         JPanel invoicePanel = createPanel("Invoices", new Color(255, 228, 225));
@@ -72,6 +73,8 @@ public class MainMenu_GUI extends JFrame {
         // Center the window on screen
         setLocationRelativeTo(null);
 
+        employeeListButton.addActionListener(e -> new EmployeeList_GUI());
+
         // Make the window visible
         setVisible(true);
     }
@@ -95,4 +98,5 @@ public class MainMenu_GUI extends JFrame {
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         return button;
     }
+
 }
