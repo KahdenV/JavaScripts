@@ -58,6 +58,11 @@ public class EmployeeDetails_GUI extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         panel.add(editButton, gbc);
 
+        editButton.addActionListener(e -> {
+            new EmployeeEdit_GUI(emp, false);  // pass the full Employee object
+        });
+
+
         add(panel);
         setVisible(true);
     }
@@ -76,4 +81,10 @@ public class EmployeeDetails_GUI extends JFrame {
         field.setBorder(BorderFactory.createEmptyBorder());
         panel.add(field, gbc);
     }
+
+    public void refresh(Employee updated) {
+        dispose(); // close current
+        new EmployeeDetails_GUI(updated.getFirstName(), updated.getLastName()); // reopen with updated data
+    }
+
 } 

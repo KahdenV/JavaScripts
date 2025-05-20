@@ -60,14 +60,8 @@ public class MainMenu_GUI extends JFrame {
         buttonPanel.add(invoicePanel);
         buttonPanel.add(payrollPanel);
 
-        // Bottom exit button
-        JButton exitButton = new JButton("❌");
-        exitButton.setPreferredSize(new Dimension(50, 50));
-        exitButton.addActionListener(e -> System.exit(0));
-
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(new Color(70, 110, 160));
-        bottomPanel.add(exitButton);
         add(bottomPanel, BorderLayout.SOUTH);
 
         // Center the window on screen

@@ -17,8 +17,12 @@ public class EmployeeList_GUI extends JFrame {
     private List<Employee> inactiveList;
     private List<Employee> corporateList;
 
+    public static EmployeeList_GUI instance;
+
     public EmployeeList_GUI() {
         super("Employee List");
+
+        instance = this;
 
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -67,6 +71,13 @@ public class EmployeeList_GUI extends JFrame {
         // Show initial count
         countLabel.setText("Total Active Employees: " + activeList.size());
 
+        newButton.addActionListener(e -> {
+            Employee blank = new Employee(
+                -1, "", "", "", "", "", "", "", "", "", "", "", true // empty/default values
+            );
+            new EmployeeEdit_GUI(blank, true);
+        });
+
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -109,4 +120,17 @@ public class EmployeeList_GUI extends JFrame {
             }
         });
     }
+
+    public void refreshData() {
+        tabs.removeAll();
+
+        activeList = dao.getEmployeesByStatus(true, true);
+        inactiveList = dao.getEmployeesByStatus(false, false);
+        corporateList = dao.getCorporateEmployees();
+
+        addTab("Active Employees", activeList);
+        addTab("Inactive Employees", inactiveList);
+        addTab("Corporate Employees", corporateList);
+    }
+
 }

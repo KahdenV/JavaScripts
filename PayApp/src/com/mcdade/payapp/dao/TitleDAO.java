@@ -3,7 +3,10 @@ package com.mcdade.payapp.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TitleDAO {
@@ -27,5 +30,23 @@ public class TitleDAO {
 
         return map;
     }
+
+    public List<String> getAllTitleNames() {
+    List<String> titles = new ArrayList<>();
+    String query = "SELECT TitleName FROM TitleT ORDER BY TitleName";
+    try (
+        Connection conn = DatabaseConnection.getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query)
+    ) {
+        while (rs.next()) {
+            titles.add(rs.getString("TitleName"));
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return titles;
+}
+
 }
 

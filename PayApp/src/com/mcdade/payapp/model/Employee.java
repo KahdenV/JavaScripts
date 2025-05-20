@@ -14,6 +14,8 @@ public class Employee {
     private String workPhone;
     private String hireDate;
     private String birthDate;
+    private int employeeId;
+    private boolean isActive;
 
     // Basic constructor
     public Employee(String employeeNumber, String firstName, String lastName, String position, String phone) {
@@ -25,9 +27,10 @@ public class Employee {
     }
 
     // Extended constructor
-    public Employee(String employeeNumber, String firstName, String lastName, String position, String phone,
+    public Employee(int employeeId, String employeeNumber, String firstName, String lastName, String position, String phone,
                     String title, String licenseNumber, String el1Number,
-                    String workPhone, String hireDate, String birthDate) {
+                    String workPhone, String hireDate, String birthDate, boolean isActive) {
+        this.employeeId = employeeId;
         this.employeeNumber = employeeNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,9 +42,14 @@ public class Employee {
         this.workPhone = workPhone;
         this.hireDate = hireDate;
         this.birthDate = birthDate;
+        this.isActive = isActive;
     }
 
     // Getters
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
     public String getEmployeeNumber() {
         return employeeNumber;
     }
@@ -85,4 +93,9 @@ public class Employee {
     public String getBirthDate() {
         return birthDate;
     }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
 }
